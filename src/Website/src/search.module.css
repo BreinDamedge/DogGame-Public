@@ -1,0 +1,51 @@
+.textButton {
+    color: gray;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.textButton:hover {
+    color: black;
+}
+
+.expandedContent {
+    color: gray;
+}
+
+.content {
+    border-left: 1px solid black;
+    padding-left: 1em;
+}
+
+.searchBar {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5em;
+}
+
+.searchInput {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 20pt;
+}
+
+.searchModifyButton {
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.searchSettings {
+    border-bottom: 1px solid black;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.editButton {
+    margin-right: 5px;
+}

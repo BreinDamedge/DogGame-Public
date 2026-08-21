@@ -1,0 +1,11 @@
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+pre, button {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+svg {
+    border: 1px solid red;
+}
