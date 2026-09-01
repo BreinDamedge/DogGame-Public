@@ -5,7 +5,8 @@ DogGame! was made as a 3rd year CSProject while attending DigiPen.
 
 Code by Jacob Ableidinger and Matt Loots.  
 
-[!NOTE] Some code has been removed for publication.
+> [!NOTE]
+> Some code has been removed for publication.
 
 
 # Using The Project:
