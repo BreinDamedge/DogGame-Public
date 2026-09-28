@@ -117,6 +117,13 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
             # We dont support any other get requests
             self._reply(404, {"error": "Not found"})
 
+
+    def send_downloaded_file(self, file_name_:str) -> None:
+        # grab file by name
+        # send post request to upload endpoint with post request contents being file_name_'s data
+            # have the body be a json payload with an id field and a bytes field
+        # on a 200 (success) response, delete the original file (at file_name_) using the os bindings.
+
     # Called by python on every POST request
     def do_POST(self):
         # Read post body
@@ -125,7 +132,7 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
             if "Content-Length" in self.headers
             else 0
         )
-        body = self.rfile.read(length)
+        body: bytes = self.rfile.read(length)
 
         if self.path == "/documents/upload":
             # Add document
@@ -133,6 +140,13 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
 
             # Reply with success
             self._reply(200, {"message": "The document has been uploaded succesfully"})
+        elif self.path == "/ingestdownload":
+            # get the file data
+            # send it to the upload endpoint
+            # if this was successful delete the file
+            # otherwise try again, unless max retrys was reached or smth
+            ...
+
         elif self.path == "/documents/delete":
             # Parse json
             contents = json.loads(body)
