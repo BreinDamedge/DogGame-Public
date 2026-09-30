@@ -3,3 +3,4 @@ __pycache__
 .vscode
 */Documents/*
 */Documents/.metadata/*
+/src/.env

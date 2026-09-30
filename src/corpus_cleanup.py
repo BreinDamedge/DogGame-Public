@@ -16,6 +16,21 @@ Description:
 
 import uuid, os, path_info
 from parsing import list_files_with_extention, list_files
+from os import (
+    rename,
+    listdir,
+    getenv,
+)
+from dotenv import load_dotenv
+
+
+def move_mht() -> None:
+    _: bool = load_dotenv()
+    src = getenv("DOWNLOADS_PATH")
+    print(f"scanning {getenv('DOWNLOADS_PATH')}")
+    files: list[str] = [f for f in listdir(src) if f.endswith(".mht")]
+    for f in files:
+        rename(f"{src}/{f}", f"{path_info.CORPUS_PATH}/{f}")
 
 
 def is_uuid4(file_name_: str) -> bool:
