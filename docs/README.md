@@ -73,7 +73,7 @@ Your searchable corpus of documents are the contents of `src/Documents`. When yo
 1. Open chrome and navigate to your installed extensions
 1. toggle on developer mode
 1. click `load unpacked` and select `./src/ext` in this project folder as the source for your extension.
-1. add `EXT_AC="<extension_id>"` to your `.env` file and replace `<extension_id>` with the `ID` field of the DogGame! extension.
+1. add `EXT_AC="<extension_id>"` to your `.env` file and replace `<extension_id>` with the `ID` field of the DogGame! extension.  
 ![alt text](./imgs/ext_ss.png)
 1. restart DogGame! (with `main.py` or `bg.pyw`) and test saving a page with the extension.
 
