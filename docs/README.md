@@ -43,7 +43,7 @@ You can get as fancy as you'd like with setup, but if you'd like mhtml documets 
 1. setup wsl2 (if you haven't already)
 1. install nginx in wsl
     - `sudo apt install nginx`
-1. get the ip address of wsl (`HOST`)
+1. get the windows host ip address in wsl (`HOST`)
     - `ip route show | grep -i default | awk '{print $3}'`
 1. create an nginx rule for doggame
     1. create the file with `sudo nano /etc/nginx/sites-available/doggame.local`
