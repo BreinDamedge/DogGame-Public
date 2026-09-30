@@ -30,7 +30,7 @@ Your searchable corpus of documents are the contents of `src/Documents`. When yo
 
 ## Advanced Setup
 You can get as fancy as you'd like with setup, but if you'd like mhtml documets to be automatically moved from your downloads into your corpus directory and indexed, this is the setup to use.
-> ![WARNING]
+> [!WARNING]
 > As of writing the extension doesn't only move the file you just downloaded, it will instead move *all* `.mht` files from the downloads directory into the corpus directory.
 
 ### Steps for Windows 11:
