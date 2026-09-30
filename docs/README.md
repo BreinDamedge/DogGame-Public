@@ -61,13 +61,14 @@ Your searchable corpus of documents are the contents of `src/Documents`. When yo
     1. make a symlink to the active connections directory so nginx uses this rule: `sudo ln -s /etc/nginx/sites-available/doggame.local /etc/nginx/sites-enabled/`
   1. restart nginx `sudo systemctl restart nginx`
 1. setup your `.env` file.
-  - create a `.env` file in `/src` with the following content:
-  ```env
-  DOWNLOADS_PATH="C:/Users/<your_user>/Downloads/"
-  HOST="<your_wsl_ip>"
-  ```
-  - replace `<your_user>` and `<your_wsl_ip>`
-  - Then sanity check. At this point if you run `uv run main.py` DogGame! should be reachable at `doggame.local` in your browser.
+    - create a `.env` file in `/src` with the following content:
+        ```env
+        DOWNLOADS_PATH="C:/Users/<your_user>/Downloads/"
+        HOST="<your_wsl_ip>"
+        ```
+    - replace `<your_user>` and `<your_wsl_ip>`
+    - Then sanity check. At this point if you run `uv run main.py` DogGame! should be reachable at `doggame.local` in your browser.
+
 #### Setup The Chrome Extension
 1. Open chrome and navigate to your installed extensions
 1. toggle on developer mode
