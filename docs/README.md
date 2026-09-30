@@ -38,27 +38,27 @@ Your searchable corpus of documents are the contents of `src/Documents`. When yo
 ```
 1. setup wsl2 (if you haven't already)
 1. install nginx in wsl
-  - `sudo apt install nginx`
+    - `sudo apt install nginx`
 1. get the ip address of wsl (`HOST`)
-  - `ip route show | grep -i default | awk '{print $3}'`
+    - `ip route show | grep -i default | awk '{print $3}'`
 1. create an nginx rule for doggame
-  1. create the file with `sudo nano /etc/nginx/sites-available/doggame.local`
-  1. content is something like this:
-  ```
-  server {
-      listen 80;
-      server_name doggame.local;
+    1. create the file with `sudo nano /etc/nginx/sites-available/doggame.local`
+    1. content is something like this:
+      ```
+        server {
+            listen 80;
+            server_name doggame.local;
 
-      location / {
-          proxy_pass http://127.0.0.1:1234;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-      }
-  }
-  ```
-  1. make a symlink to the active connections directory so nginx uses this rule: `sudo ln -s /etc/nginx/sites-available/doggame.local /etc/nginx/sites-enabled/`
+            location / {
+                proxy_pass http://127.0.0.1:1234;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+        }
+        ```
+    1. make a symlink to the active connections directory so nginx uses this rule: `sudo ln -s /etc/nginx/sites-available/doggame.local /etc/nginx/sites-enabled/`
   1. restart nginx `sudo systemctl restart nginx`
 1. setup your `.env` file.
   - create a `.env` file in `/src` with the following content:
