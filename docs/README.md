@@ -77,4 +77,5 @@ Your searchable corpus of documents are the contents of `src/Documents`. When yo
 ![alt text](./imgs/ext_ss.png)
 1. restart DogGame! (with `main.py` or `bg.pyw`) and test saving a page with the extension.
 
-In theory you're good to go but this is a lot of steps and has only been tested on one machine.
+In theory you're good to go but this is a lot of steps and has only been tested on one machine!  
+Best of luck!
