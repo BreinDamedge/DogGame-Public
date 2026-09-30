@@ -1,0 +1,32 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "data/icons/woof.png",
+         "32": "data/icons/woof.png",
+         "48": "data/icons/woof.png",
+         "64": "data/icons/woof.png"
+      },
+      "default_title": "DogGame!"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "commands": {
+      "_execute_action": {
+      }
+   },
+   "description": "Save a page's content and combine all of the resources into one file for DogGame!",
+   "icons": {
+      "128": "data/icons/woof.png",
+      "16": "data/icons/woof.png",
+      "32": "data/icons/woof.png",
+      "48": "data/icons/woof.png",
+      "64": "data/icons/woof.png"
+   },
+   "manifest_version": 3,
+   "name": "DogGame!",
+   "offline_enabled": true,
+   "permissions": [ "storage", "downloads", "activeTab", "pageCapture", "contextMenus" ],
+   "host_permissions": ["http://doggame.local/ingestdownload"],
+   "version": "0.0.1"
+}

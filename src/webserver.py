@@ -7,7 +7,13 @@ from corpus_cleanup import (
     move_mht,
 )
 from manager import Manager
+from os import getenv
 
+EXT_AC: str | None = getenv("EXT_AC")
+if EXT_AC is None:
+    print(
+        "WARNING: EXT_AC not set in .env file. This may cause issues if you're using the /ingestdownload endpoint"
+    )
 
 _MANAGER: Manager = None
 
@@ -145,6 +151,10 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
             move_mht()
             # scan them
             rescan_corpus()
+
+            self.send_header(
+                "Access-Control-Allow-Origin:", f"chrome-extension://{EXT_AC}"
+            )
             self._reply(200, {"message": "docs moved and scanned"})
 
         elif self.path == "/documents/delete":
