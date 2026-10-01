@@ -54,7 +54,7 @@ You can get as fancy as you'd like with setup, but if you'd like mhtml documets 
             server_name doggame.local;
 
             location / {
-                proxy_pass http://127.0.0.1:1234;
+                proxy_pass http://<windows_host_ip>:1234/;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
