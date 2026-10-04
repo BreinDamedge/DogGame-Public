@@ -1,6 +1,23 @@
-import http.server, json, corpus_cleanup
+import http.server
+import json
+from corpus_cleanup import (
+    setup_metadata,
+    rename_non_uuid_files,
+    delete_orphaned_metadata,
+    move_mht,
+)
 from manager import Manager
+from os import getenv
+from dotenv import load_dotenv
 
+_: bool = load_dotenv()
+
+
+EXT_AC: str | None = getenv("EXT_AC")
+if EXT_AC is None:
+    print(
+        "WARNING: EXT_AC not set in .env file. This may cause issues if you're using the /ingestdownload endpoint"
+    )
 
 _MANAGER: Manager = None
 
@@ -17,9 +34,9 @@ def init(config_file_path_: str = None) -> None:
 
     # rename, clean, and validate corpus
     print("Cleaning Corpus...")
-    corpus_cleanup.setup_metadata()  # still want this for index file
-    corpus_cleanup.rename_non_uuid_files()
-    corpus_cleanup.delete_orphaned_metadata()
+    setup_metadata()  # still want this for index file
+    rename_non_uuid_files()
+    delete_orphaned_metadata()
 
     print("Loading Systems...")
     if config_file_path_ is not None:
@@ -45,8 +62,8 @@ def rescan_corpus() -> None:
     print("Validating...")
     # rename, clean, and validate corpus
     print("Cleaning Corpus...")
-    corpus_cleanup.rename_non_uuid_files()
-    corpus_cleanup.delete_orphaned_metadata()
+    rename_non_uuid_files()
+    delete_orphaned_metadata()
 
     _MANAGER.rescan_corpus()
 
@@ -79,14 +96,14 @@ _FILE_MAPPINGS = {
 
 class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
     # Sends a raw reply to the request
-    def _reply_raw(self, code, body, content_type):
+    def _reply_raw(self, code: int, body: bytes, content_type: str):
         self.send_response(code)
         self.send_header("content-type", content_type)
         self.end_headers()
-        self.wfile.write(body)
+        _ = self.wfile.write(body)
 
     # Replies to the request with json data
-    def _reply(self, code, body):
+    def _reply(self, code: int, body: object) -> None:
         self._reply_raw(code, json.dumps(body).encode("utf8"), "application/json")
 
     # Called by python on every GET request
@@ -125,7 +142,7 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
             if "Content-Length" in self.headers
             else 0
         )
-        body = self.rfile.read(length)
+        body: bytes = self.rfile.read(length)
 
         if self.path == "/documents/upload":
             # Add document
@@ -133,6 +150,17 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
 
             # Reply with success
             self._reply(200, {"message": "The document has been uploaded succesfully"})
+        elif self.path == "/ingestdownload":
+            # scan the host downloads and move mht files to corpus dir
+            move_mht()
+            # scan them
+            rescan_corpus()
+
+            self.send_header(
+                "Access-Control-Allow-Origin:", f"chrome-extension://{EXT_AC}"
+            )
+            self._reply(200, {"message": "docs moved and scanned"})
+
         elif self.path == "/documents/delete":
             # Parse json
             contents = json.loads(body)
@@ -159,8 +187,6 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
                 ranker = str(contents["ranker"])
                 reply = _MANAGER.search_documents(query, ranker_id_=ranker)
 
-                # TODO: Use ranker
-
                 # Reply with results
                 self._reply(200, {"results": reply})
             else:
@@ -184,7 +210,7 @@ class WebsiteRequestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path == "/button/shutdown":
             quit()
         elif self.path == "/button/rescan":
-            rescan_corpus()  # TODO: Actually rescan here
+            rescan_corpus()
             self._reply_raw(200, "{}", "application/json")
         elif self.path == "/dump/metadata":
             data = _MANAGER.metadata_for_visualiation()
