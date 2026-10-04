@@ -8,6 +8,10 @@ from corpus_cleanup import (
 )
 from manager import Manager
 from os import getenv
+from dotenv import load_dotenv
+
+_: bool = load_dotenv()
+
 
 EXT_AC: str | None = getenv("EXT_AC")
 if EXT_AC is None:
